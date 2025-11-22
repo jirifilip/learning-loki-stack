@@ -3,3 +3,15 @@ services:
     image: "grafana/loki:3.5.8"
     ports:
       - "3100:3100"
+    volumes:
+      - ./loki/config.yaml:/etc/loki/config.yaml
+    command:
+      - "-config.file=/etc/loki/config.yaml"
+      - "-log.level=info"
+
+  grafana:
+    image: "grafana/grafana:12.4.0-19363970803-ubuntu"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./grafana/loki.yaml:/etc/grafana/provisioning/datasources/loki.yaml"
