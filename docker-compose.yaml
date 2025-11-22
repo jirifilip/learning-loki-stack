@@ -5,9 +5,12 @@ services:
       - "3100:3100"
     volumes:
       - "./loki/config.yaml:/etc/loki/config.yaml"
+      - "loki-data:/var/lib/loki"
     command:
       - "-config.file=/etc/loki/config.yaml"
       - "-log.level=info"
+    # Temporary fix for bypassing volume permissions
+    user: "0:0"
 
   grafana:
     image: "grafana/grafana:12.4.0-19363970803-ubuntu"
@@ -36,3 +39,4 @@ services:
 
 volumes:
   grafana-data:
+  loki-data:
